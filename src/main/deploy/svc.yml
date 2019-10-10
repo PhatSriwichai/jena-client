@@ -1,0 +1,17 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: blackbox
+  namespace: quirk
+  labels:
+    app: blackbox
+    service: blackbox
+spec:
+  ports:
+  - port: 8080
+    targetPort: 8080
+    nodePort: 31000
+  type: NodePort
+  selector:
+    app: blackbox

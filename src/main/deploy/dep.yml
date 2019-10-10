@@ -1,0 +1,36 @@
+---
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: blackbox
+  namespace: quirk
+  labels:
+    app: blackbox
+    version: v1.0.0
+spec:
+  revisionHistoryLimit: 0
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: blackbox
+      version: v1.0.0
+  template:
+    metadata:
+      labels:
+        app: blackbox
+        version: v1.0.0
+    spec:
+      containers:
+        - name: blackbox
+          image: asia.gcr.io/groovy-gearbox-237719/quirk-bot/blackbox:1.0.0
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: APP_ENV
+              value: cloud
